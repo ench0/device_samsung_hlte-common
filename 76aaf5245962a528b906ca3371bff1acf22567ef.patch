@@ -1,0 +1,66 @@
+From 76aaf5245962a528b906ca3371bff1acf22567ef Mon Sep 17 00:00:00 2001
+From: Christer <christer.bjor@gmail.com>
+Date: Tue, 10 Mar 2015 14:33:36 +0100
+Subject: [PATCH] hlte-common: Removed deprecated Torch config
+
+Change-Id: I12ebee5ae441e44db1830759e8e3c9b1e10a7863
+---
+ hlte.mk                                           |  4 ---
+ overlay/packages/apps/Torch/res/values/config.xml | 33 -----------------------
+ 2 files changed, 37 deletions(-)
+ delete mode 100644 overlay/packages/apps/Torch/res/values/config.xml
+
+diff --git a/hlte.mk b/hlte.mk
+index 918ff97..8b29a27 100644
+--- a/hlte.mk
++++ b/hlte.mk
+@@ -118,10 +118,6 @@ PRODUCT_PACKAGES += \
+ PRODUCT_COPY_FILES += \
+     $(LOCAL_PATH)/configs/thermal-engine-8974.conf:system/etc/thermal-engine-8974.conf
+ 
+-# Torch
+-PRODUCT_PACKAGES += \
+-    Torch
+-
+ # Wifi
+ PRODUCT_PACKAGES += \
+     libnetcmdiface \
+diff --git a/overlay/packages/apps/Torch/res/values/config.xml b/overlay/packages/apps/Torch/res/values/config.xml
+deleted file mode 100644
+index c889bd9..0000000
+--- a/overlay/packages/apps/Torch/res/values/config.xml
++++ /dev/null
+@@ -1,33 +0,0 @@
+-<!--
+-/*
+-** Copyright 2011, The CyanogenMod Project
+-**
+-** Licensed under the Apache License, Version 2.0 (the "License"); 
+-** you may not use this file except in compliance with the License. 
+-** You may obtain a copy of the License at 
+-**
+-**     http://www.apache.org/licenses/LICENSE-2.0 
+-**
+-** Unless required by applicable law or agreed to in writing, software 
+-** distributed under the License is distributed on an "AS IS" BASIS, 
+-** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+-** See the License for the specific language governing permissions and 
+-** limitations under the License.
+-*/
+--->
+-
+-<resources>
+-    <!-- If there is no sysfs-based control mechanism, enable this -->
+-    <bool name="useCameraInterface">false</bool>
+-
+-    <!-- Full path to the sysfs toggle -->
+-    <string name="flashDevice">/sys/class/leds/torch-sec1/brightness</string>
+-
+-    <!-- Lowest setting -->
+-    <integer name="valueOn">5</integer>
+-    <!-- Middle setting -->
+-    <integer name="valueHigh">15</integer>
+-    <!-- Highest setting, leave -1 if it doesn't exist -->
+-    <integer name="valueDeathRay">-1</integer>
+-
+-</resources>

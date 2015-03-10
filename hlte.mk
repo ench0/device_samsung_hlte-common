@@ -132,10 +132,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
 GalaxyNote3Settings
 
-# Torch
-PRODUCT_PACKAGES += \
-    Torch
-
 # Wifi
 PRODUCT_PACKAGES += \
     libnetcmdiface \
