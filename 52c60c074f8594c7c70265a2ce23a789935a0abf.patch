@@ -1,0 +1,131 @@
+From 52c60c074f8594c7c70265a2ce23a789935a0abf Mon Sep 17 00:00:00 2001
+From: Steve Kondik <steve@cyngn.com>
+Date: Mon, 16 Mar 2015 15:16:56 +0800
+Subject: [PATCH] hlte-common: Add PCC calibration interface
+
+* This will be used by the new LiveDisplay feature.
+
+Change-Id: I1735744ff3e23af134b9e5232813cc5f0d1eb34e
+---
+ BoardConfigCommon.mk                               |  1 +
+ .../hardware/DisplayColorCalibration.java          | 50 ++++++++++++++++++++++
+ rootdir/etc/init.qcom.rc                           |  5 +++
+ sepolicy/file_contexts                             |  3 +-
+ sepolicy/system_server.te                          |  1 +
+ 5 files changed, 59 insertions(+), 1 deletion(-)
+ create mode 100644 cmhw/org/cyanogenmod/hardware/DisplayColorCalibration.java
+
+diff --git a/BoardConfigCommon.mk b/BoardConfigCommon.mk
+index e59b585..2d9fc9b 100644
+--- a/BoardConfigCommon.mk
++++ b/BoardConfigCommon.mk
+@@ -51,6 +51,7 @@ TARGET_PROVIDES_CAMERA_HAL := true
+ USE_DEVICE_SPECIFIC_CAMERA := true
+ 
+ # CMHW
++BOARD_HARDWARE_CLASS += device/samsung/hlte-common/cmhw
+ BOARD_HARDWARE_CLASS += hardware/samsung/cmhw
+ 
+ # RIL
+diff --git a/cmhw/org/cyanogenmod/hardware/DisplayColorCalibration.java b/cmhw/org/cyanogenmod/hardware/DisplayColorCalibration.java
+new file mode 100644
+index 0000000..80bbfad
+--- /dev/null
++++ b/cmhw/org/cyanogenmod/hardware/DisplayColorCalibration.java
+@@ -0,0 +1,50 @@
++/*
++ * Copyright (C) 2014 The CyanogenMod Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.cyanogenmod.hardware;
++
++import java.io.File;
++import java.util.Scanner;
++import org.cyanogenmod.hardware.util.FileUtils;
++
++public class DisplayColorCalibration {
++    private static final String COLOR_FILE = "/sys/class/graphics/fb0/rgb";
++
++    public static boolean isSupported() {
++        File f = new File(COLOR_FILE);
++        return f.exists();
++    }
++
++    public static int getMaxValue()  {
++        return 32768;
++    }
++
++    public static int getMinValue()  {
++        return 255;
++    }
++
++    public static int getDefValue() {
++        return getMaxValue();
++    }
++
++    public static String getCurColors()  {
++        return FileUtils.readOneLine(COLOR_FILE);
++    }
++
++    public static boolean setColors(String colors) {
++        return FileUtils.writeLine(COLOR_FILE, colors);
++    }
++}
+diff --git a/rootdir/etc/init.qcom.rc b/rootdir/etc/init.qcom.rc
+index b4f7dac..e2e4d8d 100644
+--- a/rootdir/etc/init.qcom.rc
++++ b/rootdir/etc/init.qcom.rc
+@@ -232,6 +232,11 @@ on post-fs-data
+     chown system system /sys/class/sec/sec_touchkey/keypad_enable
+     chmod 0660 /sys/class/sec/sec_touchkey/keypad_enable
+     restorecon /sys/class/sec/sec_touchkey/keypad_enable
++
++# LiveDisplay Feature
++    chown system system /sys/devices/virtual/graphics/fb0/rgb
++    chmod 0660 /sys/devices/virtual/graphics/fb0/rgb
++
+ # permission for Input Device(Touchkey).
+     chmod 0660 /sys/class/input/input2/enabled
+     chown system system /sys/class/input/input2/enabled
+diff --git a/sepolicy/file_contexts b/sepolicy/file_contexts
+index 2b74821..7edc16b 100644
+--- a/sepolicy/file_contexts
++++ b/sepolicy/file_contexts
+@@ -12,6 +12,7 @@
+ /sys/class/sec/sec_touchkey/keypad_enable               u:object_r:sysfs_display:s0
+ 
+ # Display
++/sys/devices/virtual/graphics/fb0/rgb                   u:object_r:sysfs_display:s0
+ /sys/devices/virtual/lcd/panel/power_reduce             u:object_r:sysfs_display:s0
+ 
+ # NFC
+@@ -37,4 +38,4 @@
+ # RIL
+ /efs/FactoryApp(/.*)?  					u:object_r:efs_file:s0
+ /efs/imei	  					u:object_r:efs_file:s0
+-/efs/mps_code.dat					u:object_r:efs_file:s0
+\ No newline at end of file
++/efs/mps_code.dat					u:object_r:efs_file:s0
+diff --git a/sepolicy/system_server.te b/sepolicy/system_server.te
+index 5d51fb2..cee41bb 100644
+--- a/sepolicy/system_server.te
++++ b/sepolicy/system_server.te
+@@ -1,5 +1,6 @@
+ allow system_server sysfs_vibeamp:dir search;
+ allow system_server sysfs_vibeamp:file { open read write };
++allow system_server sysfs_display:file rw_file_perms;
+ allow system_server time_daemon:unix_stream_socket connectto;
+ allow system_server sysfs_thermal:dir search;
+ allow system_server sysfs_thermal:file { open read write };

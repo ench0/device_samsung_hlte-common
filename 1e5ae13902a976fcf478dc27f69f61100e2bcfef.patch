@@ -1,0 +1,23 @@
+From 1e5ae13902a976fcf478dc27f69f61100e2bcfef Mon Sep 17 00:00:00 2001
+From: Christer <christer.bjor@gmail.com>
+Date: Tue, 24 Mar 2015 00:11:34 +0100
+Subject: [PATCH] hlte-common: remove remaining code from lollipop hack
+
+Change-Id: Ibe70885d23c5b9b8f3b243876289077378d742a7
+---
+ ril/telephony/java/com/android/internal/telephony/hlteRIL.java | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/ril/telephony/java/com/android/internal/telephony/hlteRIL.java b/ril/telephony/java/com/android/internal/telephony/hlteRIL.java
+index 1311252..022f292 100644
+--- a/ril/telephony/java/com/android/internal/telephony/hlteRIL.java
++++ b/ril/telephony/java/com/android/internal/telephony/hlteRIL.java
+@@ -50,8 +50,6 @@
+     private boolean isGSM = false;
+     private boolean newril = needsOldRilFeature("newril"); //4.4.4 verson of Samsung RIL
+ 
+-    private Message mPendingGetSimStatus;
+-
+     public hlteRIL(Context context, int preferredNetworkType,
+             int cdmaSubscription, Integer instanceId) {
+         super(context, preferredNetworkType, cdmaSubscription, instanceId);

@@ -1,0 +1,23 @@
+From 2e2692f4eba44f3efb557bbbfea81120472b0f74 Mon Sep 17 00:00:00 2001
+From: Arne Coucheron <arco68@gmail.com>
+Date: Wed, 25 Mar 2015 00:06:11 +0100
+Subject: [PATCH] hlte-common: Fix typo in telephony input device
+
+Change-Id: Ic40449d0034a44a7f629aee7714827167e9873b8
+---
+ audio/audio_policy.conf | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/audio/audio_policy.conf b/audio/audio_policy.conf
+index 3aed27c..bd710a2 100644
+--- a/audio/audio_policy.conf
++++ b/audio/audio_policy.conf
+@@ -5,7 +5,7 @@
+ global_configuration {
+   attached_output_devices AUDIO_DEVICE_OUT_EARPIECE|AUDIO_DEVICE_OUT_SPEAKER|AUDIO_DEVICE_OUT_TELEPHONY_TX
+   default_output_device AUDIO_DEVICE_OUT_SPEAKER
+-  attached_input_devices AUDIO_DEVICE_IN_BUILTIN_MIC|AUDIO_DEVICE_IN_BACK_MIC|AUDIO_DEVICE_IN_REMOTE_SUBMIX|AUDIO_DEVICE_IN_VOICE_CALL|AUDIO_DEVICE_IN_TELEPHONY_TX
++  attached_input_devices AUDIO_DEVICE_IN_BUILTIN_MIC|AUDIO_DEVICE_IN_BACK_MIC|AUDIO_DEVICE_IN_REMOTE_SUBMIX|AUDIO_DEVICE_IN_VOICE_CALL|AUDIO_DEVICE_IN_TELEPHONY_RX
+ }
+ 
+ # audio hardware module section: contains descriptors for all audio hw modules present on the
