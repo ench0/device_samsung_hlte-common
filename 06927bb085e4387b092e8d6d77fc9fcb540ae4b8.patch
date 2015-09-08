@@ -1,0 +1,25 @@
+From 06927bb085e4387b092e8d6d77fc9fcb540ae4b8 Mon Sep 17 00:00:00 2001
+From: Matt Filetto <matt.filetto@gmail.com>
+Date: Tue, 24 Feb 2015 15:42:21 -0800
+Subject: [PATCH] hlte-common: use original camera API.
+
+Change-Id: Ib23cea01634cc3e66cdb93740e1c00c7879dab82
+---
+ system_prop.mk | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/system_prop.mk b/system_prop.mk
+index be40795..e58e4b0 100644
+--- a/system_prop.mk
++++ b/system_prop.mk
+@@ -14,6 +14,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
+     audio.offload.pcm.16bit.enable=true \
+     audio.offload.pcm.24bit.enable=true
+ 
++# Camera
++PRODUCT_PROPERTY_OVERRIDES += \
++    camera2.portability.force_api=1
++
+ # Display
+ PRODUCT_PROPERTY_OVERRIDES += \
+     ro.hdcp2.rx=tz \

@@ -1,0 +1,30 @@
+From 5ab00f2df2e7887aff059c616d34918f25bfefa2 Mon Sep 17 00:00:00 2001
+From: Christer <christer.bjor@gmail.com>
+Date: Wed, 25 Mar 2015 01:18:40 +0100
+Subject: [PATCH] hlte-common: fix a crash on startup
+
+Change-Id: I1cfc44de965734eff0d32d61beb0294d07483f5b
+---
+ sepolicy/system_app.te    | 2 --
+ sepolicy/system_server.te | 2 +-
+ 2 files changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/sepolicy/system_app.te b/sepolicy/system_app.te
+index 9b4d6a6..bc716f2 100644
+--- a/sepolicy/system_app.te
++++ b/sepolicy/system_app.te
+@@ -1,3 +1 @@
+ allow system_app sysfs_display:file { getattr open read write };
+-allow system_app sysfs_vibeamp:dir search;
+-allow system_app sysfs_vibeamp:file { getattr open read write };
+diff --git a/sepolicy/system_server.te b/sepolicy/system_server.te
+index cee41bb..17db72c 100644
+--- a/sepolicy/system_server.te
++++ b/sepolicy/system_server.te
+@@ -1,5 +1,5 @@
+ allow system_server sysfs_vibeamp:dir search;
+-allow system_server sysfs_vibeamp:file { open read write };
++allow system_server sysfs_vibeamp:file { getattr open read write };
+ allow system_server sysfs_display:file rw_file_perms;
+ allow system_server time_daemon:unix_stream_socket connectto;
+ allow system_server sysfs_thermal:dir search;

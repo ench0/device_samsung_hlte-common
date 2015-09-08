@@ -1,0 +1,32 @@
+From 0aeadd4048f8c0bb4a24ea39107d4eaf7bb32532 Mon Sep 17 00:00:00 2001
+From: gekkehenkie11 <allard_addink@hotmail.com>
+Date: Fri, 27 Mar 2015 20:14:01 -0400
+Subject: [PATCH] hlte: fix 4k camera crashes without the hack.
+
+Change-Id: Ie9db52edf9e27cf3c1a0702106cf90a91ab4983c
+---
+ camera/CameraWrapper.cpp | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/camera/CameraWrapper.cpp b/camera/CameraWrapper.cpp
+index 8d93ed3..aed3139 100644
+--- a/camera/CameraWrapper.cpp
++++ b/camera/CameraWrapper.cpp
+@@ -51,6 +51,8 @@ static struct hw_module_methods_t camera_module_methods = {
+     .open = camera_device_open
+ };
+ 
++#define KEY_VIDEO_FRAME_FORMAT "video-frame-format"
++
+ camera_module_t HAL_MODULE_INFO_SYM = {
+     .common = {
+          tag: HARDWARE_MODULE_TAG,
+@@ -120,6 +122,8 @@ static char *camera_fixup_getparams(int __attribute__((unused)) id,
+      * this can be turned off, fixup the params to tell the Camera
+      * that it really is okay to turn it off.
+      */
++    params.setPreviewFormat("yuv420sp");
++    params.set(KEY_VIDEO_FRAME_FORMAT, "yuv420sp");
+ 
+     const char* hfrValues = params.get(android::CameraParameters::KEY_SUPPORTED_VIDEO_HIGH_FRAME_RATE_MODES);
+     if (hfrValues && *hfrValues && ! strstr(hfrValues, "off")) {

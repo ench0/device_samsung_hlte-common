@@ -1,0 +1,29 @@
+From 07342ed40b6e4f97d0b0bf212dda7ce577f0be68 Mon Sep 17 00:00:00 2001
+From: Shareef Ali <shareefalis@cyanogenmod.org>
+Date: Sat, 28 Mar 2015 19:09:12 +0000
+Subject: [PATCH] Revert "Camera: Add Enforcing video-snapshot-supported =
+ true"
+
+does not work with 4k
+This reverts commit 3542d19330198db26934d098b074991ed1c35fc7.
+
+Change-Id: Ie18dfb010eaaf49bef97b210eac60efe1aa356f5
+(cherry picked from commit 93badd4f8a8e1e432b6a3b222014cf6fd61c9f58)
+---
+ camera/CameraWrapper.cpp | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/camera/CameraWrapper.cpp b/camera/CameraWrapper.cpp
+index aed3139..25b157f 100644
+--- a/camera/CameraWrapper.cpp
++++ b/camera/CameraWrapper.cpp
+@@ -132,9 +132,6 @@ static char *camera_fixup_getparams(int __attribute__((unused)) id,
+         params.set(android::CameraParameters::KEY_SUPPORTED_VIDEO_HIGH_FRAME_RATE_MODES, tmp);
+     }
+ 
+-    /* Enforce video-snapshot-supported to true */
+-    params.set(android::CameraParameters::KEY_VIDEO_SNAPSHOT_SUPPORTED, "true");
+-
+     android::String8 strParams = params.flatten();
+     char *ret = strdup(strParams.string());
+ 
