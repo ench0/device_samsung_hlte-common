@@ -151,5 +151,5 @@ PRODUCT_COPY_FILES += \
 $(call inherit-product, device/samsung/msm8974-common/msm8974.mk)
 
 # Snap		
-PRODUCT_PACKAGES += \		
-    Snap
+PRODUCT_PACKAGES += \
+   Snap
