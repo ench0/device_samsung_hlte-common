@@ -63,6 +63,10 @@ PRODUCT_PACKAGES += \
     resize2fs \
     setup_fs
 
+# Doze
+PRODUCT_PACKAGES += \
+    SamsungDoze
+
 # GPS
 PRODUCT_PACKAGES += \
     gps.msm8974
